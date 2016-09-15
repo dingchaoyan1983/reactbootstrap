@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Button, Popover, Tooltip, Modal, OverlayTrigger} from 'react-bootstrap';
+import { Button, Popover, Tooltip, Modal, OverlayTrigger } from 'react-bootstrap';
 import './css/index.css';
-const mountNode = document.getElementById('react-root');
 
-console.log(__NODE_ENV__);
+const mountNode = document.getElementById('react-root');
 
 const Example = React.createClass({
   getInitialState() {

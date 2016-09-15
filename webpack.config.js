@@ -15,9 +15,9 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 var config = {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
-    app: path.join(__dirname, src, 'index.js'),
+    app: path.join(__dirname, src, 'index.jsx'),
     vendor: ['react', 'react-dom', 'react-bootstrap']
   },
   output: {
@@ -25,14 +25,16 @@ var config = {
     filename: '[name].[hash].js'
   },
   module: {
+    preLoaders: [
+      { test: /\.(js|jsx)$/, loader: "eslint", exclude: /node_modules/}
+    ],
     loaders: [
       {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         exclude: /(node_modules|bower_components)/,
         query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react']
+          cacheDirectory: true
         }
       },
       {
@@ -65,13 +67,17 @@ var config = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
-      '__NODE_ENV__': JSON.stringify(process.env.NODE_ENV || 'production')
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     inline: true,
     hot: true
+  },
+  eslint: {
+    failOnError: true,
+    configFile: path.join(__dirname, '.eslintrc')
   }
 };
 
