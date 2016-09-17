@@ -4,19 +4,26 @@
   "description": "react bootstrap practice",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server --config=./webpack.config.js",
+    "start": "./node_modules/.bin/webpack-dev-server --config=./webpack.config.js --progress --colors",
     "build": "./node_modules/.bin/better-npm-run build",
+    "build:watch": "./node_modules/.bin/better-npm-run build:watch",
     "build:prod": "./node_modules/.bin/better-npm-run build:prod"
   },
   "betterScripts": {
     "build": {
-      "command": "./node_modules/.bin/webpack",
+      "command": "./node_modules/.bin/webpack --progress --colors --display-error-details --display-modules",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build:watch": {
+      "command": "./node_modules/.bin/webpack --watch --progress --colors --display-error-details --display-modules",
       "env": {
         "NODE_ENV": "development"
       }
     },
     "build:prod": {
-      "command": "./node_modules/.bin/webpack",
+      "command": "./node_modules/.bin/webpack --progress --colors --display-error-details --display-modules",
       "env": {
         "NODE_ENV": "production"
       }

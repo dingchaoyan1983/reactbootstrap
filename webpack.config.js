@@ -5,10 +5,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var src = 'src';
 var dist = 'dist';
-
 var cssLoader = 'css?sourceMap&-minimize';
-
-console.log(process.env.NODE_ENV);
 
 if(process.env.NODE_ENV === 'production') {
   cssLoader = 'css?-sourceMap&minimize';
@@ -22,7 +19,8 @@ var config = {
   },
   output: {
     path: path.join(__dirname, dist),
-    filename: '[name].[hash].js'
+    filename: '[name].[hash].js',
+    pathinfo: true
   },
   module: {
     preLoaders: [
@@ -63,13 +61,14 @@ var config = {
     new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor']
     }),
-    new ExtractTextPlugin('app.css'),
+    new ExtractTextPlugin('[name].[hash].css'),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.BannerPlugin('This file is created by dding')
   ],
   devServer: {
     inline: true,
